@@ -1,0 +1,113 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %} Sign Up {% endblock title %}
+
+{% block content %}
+<style>
+/* Style for form container */
+.register-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 400px;
+  margin: 50px auto 0; /* Center the form with 50px top padding */
+  padding: 10px; /* Reduced padding */
+  background-color: #106b4a; /* Change background color to green */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Adjust box shadow color */
+  text-align: left; /* Align text to the left */
+}
+
+/* Your existing form styles */
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email] {
+  width: calc(100% - 30px); /* Adjusted width */
+  padding: 10px;
+  margin: 5px 0 15px 0; /* Reduced margin */
+  display: inline-block;
+  border: none;
+  background: #fff; /* Change background color to white */
+  color: #111; /* Change text color to black */
+  border-radius: 5px; /* Add border-radius */
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+  background-color: #ddd; /* Change background color on focus */
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 20px; /* Reduced margin */
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #000; /* Change button color to black */
+  color: white; /* Change text color to white */
+  padding: 12px 20px; /* Adjusted padding */
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border-radius: 5px; /* Border radius of 5px */
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 10px;
+}
+
+/* Change styles for titles */
+h1, p {
+  color: #fff; /* Change text color to white */
+}
+
+/* Change styles for signin link */
+.signin {
+  text-align: center;
+  color: darkorange; /* Change text color to dark orange */
+  margin-top: 10px; /* Adjusted margin */
+}
+
+/* Change styles for signin link on hover */
+.signin a:hover {
+  color: #fff; /* Change text color to white */
+}
+
+/* Change styles for Terms & Privacy link */
+.terms-privacy {
+  color: darkorange; /* Change text color to dark orange */
+}
+
+/* Change styles for Terms & Privacy link on hover */
+.terms-privacy:hover {
+  color: #fff; /* Change text color to white */
+}
+</style>
+
+<div class="register-container">
+<form method="post" action="{% url 'register' %}">
+  {% csrf_token %}
+  <div class="container">
+    <h1>Sign Up</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+
+    {{ form.as_p }}
+
+    <p>By creating an account you agree to our <a href="#" class="terms-privacy">Terms & Privacy</a>.</p>
+    <button type="submit">Register</button>
+  </div>
+
+  <div class="container signin">
+    <p>Already have an account? <a href="{% url 'login' %}" class="signin">Sign in</a>.</p>
+  </div>
+</form>
+</div>
+
+{% endblock %}

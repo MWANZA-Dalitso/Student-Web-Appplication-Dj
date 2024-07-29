@@ -1,0 +1,146 @@
+{% extends "base_generic.html" %}
+  <title>{% block title %}Testimonials {% endblock title %} </title>
+  
+
+{% block content %}
+<header>  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></header>
+<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+header {
+  background-color: #106b4a;
+  color: white;
+  text-align: center;
+  padding: 1em 0;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  font-size: 1.2em;
+}
+
+main {
+  padding: 2em;
+  text-align: center; /* Align containers to the center horizontally */
+}
+
+section {
+  background-color: white;
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: inline-block; /* Display sections horizontally */
+  width: calc(33.33% - 2em); /* Set width for each section */
+  margin-right: 1em; /* Add space between sections */
+  vertical-align: top; /* Align sections to the top */
+}
+
+h2 {
+  color: #106b4a;
+}
+
+p {
+  color: black;
+}
+
+.testimonial {
+  background-color: white;
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial p {
+  color: #555;
+  text-align: center;
+}
+
+/* Add styles for highlighted text */
+.highlight {
+  color: white;
+}
+
+/* Add margin and padding for icons and paragraphs */
+.icon-container {
+  display: flex;
+  flex-direction: column; /* Change to vertical layout */
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.icon-container i {
+  margin-bottom: 10px; /* Separate icon and text */
+  font-size: 3em; /* Adjust icon size */
+}
+
+/* Add styles for hover effect on highlighted text */
+.highlight:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+.home-button {
+
+color: black;
+padding: 10px;
+border: none;
+cursor: pointer;
+width: 125px;
+opacity: 0.9;
+border-radius: 50px;
+text-decoration: none;
+display: inline-block;
+margin-top: 20px;
+text-align: center;
+}
+
+.home-button:hover {
+opacity: 1;
+}
+
+.home-button i {
+font-size: 2.5rem; /* Adjust icon size */
+color: white; /* Set icon color */
+vertical-align: middle; /* Align icon with text */
+}
+
+</style>
+<header>
+<h1>What Our Users Say</h1>
+<a href="{% url 'home' %}" class="home-button">
+  <i class='bx bx-home'></i>
+</a>
+</header>
+<main>
+<section class="testimonial">
+    <p>"I can't imagine managing my academic documents without StudentApp. It's incredibly easy to use and has made my life so much simpler!"</p>
+    <p>- Mary ABC, Student</p>
+</section>
+<section class="testimonial">
+    <p>"The StudentApp is a game-changer for our university administration. We can manage student records efficiently and securely."</p>
+    <p>- Mr.ABC, Administrator</p>
+</section>
+<section class="testimonial">
+    <p>"Keeping track of my child's progress has never been easier. StudentApp provides all the information I need in one place."</p>
+    <p>- Lindwe, Parent</p>
+</section>
+</main>
+
+{% endblock content %}
+
+

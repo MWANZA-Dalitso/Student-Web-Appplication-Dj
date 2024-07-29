@@ -1,0 +1,65 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+<title> {% block title %} Settings {% endblock title %} </title>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+{% block content %}
+
+<style>
+/* Add your custom styles here */
+.settings-container {
+  background-color: #f0f0f0; /* Example background color */
+  padding: 20px;
+}
+
+.settings-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.change-password-link {
+  display: block;
+  margin-bottom: 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.change-password-link:hover {
+  color: #007bff; /* Example hover color */
+}
+
+.back-button {
+  display: block;
+  margin-left: auto;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+.back-button a {
+  color: #fff;
+  text-decoration: none;
+}
+.back-button:hover {
+  background-color: #333;
+}
+</style>
+
+<div class="settings-container">
+<h2 class="settings-title">Account Settings</h2>
+
+<a href="{% url 'password_change' %}" class="change-password-link">Change Password</a>
+
+<button class="back-button"><a href="{% url 'dashboard' %}">Back</a></button>
+
+</div>
+
+{% endblock content %}

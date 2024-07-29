@@ -1,0 +1,207 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %} Update Profile {% endblock title %}
+
+{% block content %}
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #106b4a;
+  color: #fff;
+}
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.section {
+  background-color: #104f35;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.section h2 {
+  color: #fff;
+  font-size: 20px;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+.form-group {
+  margin-bottom: 10px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 16px;
+}
+.form-group input[type=text], 
+.form-group input[type=email], 
+.form-group input[type=date], 
+.form-group input[type=password],
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  color: #111;
+  font-size: 14px;
+}
+.form-group input[type=text]:focus, 
+.form-group input[type=email]:focus, 
+.form-group input[type=date]:focus, 
+.form-group input[type=password]:focus,
+.form-group select:focus {
+  background-color: #ddd;
+  outline: none;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #0e5238;
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 25px;
+  margin: 0;
+}
+.home-icon {
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+}
+.home-icon i {
+  margin-right: 5px;
+}
+
+/* Media Query for Responsive Layout */
+@media (max-width: 768px) {
+  .profile-container {
+      grid-template-columns: 1fr;
+  }
+}
+
+.update-button {
+  background-color: #000;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 125px;
+  opacity: 0.9;
+  border-radius: 50px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.update-button:hover {
+  opacity: 1;
+}
+</style>
+
+<div class="header">
+<h1>Update Profile</h1>
+<a href="{% url 'dashboard' %}" class="home-icon"><i class="bi bi-house-fill"></i>Home</a>
+</div>
+
+<div class="profile-container">
+<div class="section">
+  <h2>Civil Status</h2>
+  <div class="form-group">
+      <label for="avatar">Avatar (Profile Photo)</label>
+      {{ p_form.avatar }}
+  </div>
+  <div class="form-group">
+      <label for="passport_number">Passport ID</label>
+      {{ p_form.passport_number }}
+  </div>
+  <div class="form-group">
+      <label for="gender">Gender</label>
+      {{ p_form.gender }}
+  </div>
+  <div class="form-group">
+      <label for="student_name">Name</label>
+      {{ p_form.student_name }}
+  </div>
+  <div class="form-group">
+      <label for="last_name">Last Name</label>
+      {{ p_form.last_name }}
+  </div>
+</div>
+
+<div class="section">
+  <h2>Birth</h2>
+  <div class="form-group">
+      <label for="date_of_birth">Date</label>
+      {{ p_form.date_of_birth }}
+  </div>
+  <div class="form-group">
+      <label for="city">City</label>
+      {{ p_form.city }}
+  </div>
+  <div class="form-group">
+      <label for="province">Province</label>
+      {{ p_form.province }}
+  </div>
+</div>
+
+<div class="section">
+  <h2>Location</h2>
+  <div class="form-group">
+      <label for="email">Mail</label>
+      {{ p_form.email }}
+  </div>
+  <div class="form-group">
+      <label for="province_in_morocco">Province in Morocco</label>
+      {{ p_form.province_in_morocco }}
+  </div>
+  <div class="form-group">
+      <label for="postal_code">Postal Code</label>
+      {{ p_form.postal_code }}
+  </div>
+  <div class="form-group">
+      <label for="phone_number">Phone Number</label>
+      {{ p_form.phone_number }}
+  </div>
+  <div class="form-group">
+      <label for="address">Address</label>
+      {{ p_form.address }}
+  </div>
+</div>
+
+<div class="section">
+  <h2>Education/School</h2>
+  <div class="form-group">
+      <label for="inscrip_year">Inscription Year</label>
+      {{ p_form.inscrip_year }}
+  </div>
+  <div class="form-group">
+      <label for="university">University</label>
+      {{ p_form.university }}
+  </div>
+  <div class="form-group">
+      <label for="level_of_study">Level of Study</label>
+      {{ p_form.level_of_study }}
+  </div>
+  <div class="form-group">
+      <label for="program_of_study">Program of Study</label>
+      {{ p_form.program_of_study }}
+  </div>
+</div>
+
+<!-- Update Button Section -->
+<a href="{% url 'profile' %}" class="update-button">Profile Update</a>
+
+</div>
+{% endblock %}

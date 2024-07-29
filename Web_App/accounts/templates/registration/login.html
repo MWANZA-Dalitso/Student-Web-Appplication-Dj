@@ -1,0 +1,148 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %} Login {% endblock title %}
+
+{% block content %}
+<style>
+/* Style for form container */
+.login-container {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+max-width: 400px;
+margin: 50px auto 0; /* Center the form with 50px top padding */
+padding: 10px; /* Reduced padding */
+background-color: #106b4a; /* Change background color to green */
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Adjust box shadow color */
+text-align: left; /* Align text to the left */
+}
+
+/* Full-width input fields */
+.login-container input[type=text], 
+.login-container input[type=password] {
+width: calc(100% - 30px); /* Adjusted width */
+padding: 10px;
+margin: 5px 0 15px 0; /* Reduced margin */
+display: inline-block;
+border: none;
+background: #fff; /* Change background color to white */
+color: #111; /* Change text color to black */
+border-radius: 5px; /* Add border-radius */
+}
+
+.login-container input[type=text]:focus, 
+.login-container input[type=password]:focus {
+background-color: #ddd; /* Change background color on focus */
+outline: none;
+}
+
+/* Set a style for all buttons */
+.login-container button {
+background-color: #000; /* Change button color to black */
+color: white; /* Change text color to white */
+padding: 12px 20px; /* Adjusted padding */
+margin: 8px 0;
+border: none;
+cursor: pointer;
+width: 100%;
+opacity: 0.9;
+border-radius: 5px; /* Border radius of 5px */
+}
+
+.login-container button:hover {
+opacity:1;
+}
+
+/* Add padding to container elements */
+.login-container .container {
+padding: 10px;
+}
+
+.imgcontainer {
+text-align: center;
+margin: 24px 0 12px 0;
+}
+
+img.avatar {
+width: 50%;
+border-radius: 50%;
+}
+
+/* Change styles for titles */
+.login-container h2 {
+color: #fff; /* Change text color to white */
+}
+
+/* Change label color to white */
+.login-container label {
+color: #fff;
+}
+
+/* Change styles for signin link */
+.login-container .signin {
+text-align: center;
+color: darkorange; /* Change text color to dark orange */
+margin-top: 10px; /* Adjusted margin */
+}
+
+/* Change styles for signin link on hover */
+.login-container .signin a:hover {
+color: #fff; /* Change text color to white */
+}
+
+/* Change styles for Terms & Privacy link */
+.login-container .terms-privacy {
+color: darkorange; /* Change text color to dark orange */
+}
+
+/* Change styles for Terms & Privacy link on hover */
+.login-container .terms-privacy:hover {
+color: #fff; /* Change text color to white */
+}
+
+/* Change background color for forgot password section */
+.login-container .container-footer {
+background-color: #106b4a; /* Match the form background color */
+padding: 10px;
+}
+
+.login-container .container-footer .psw {
+color: #fff; /* Change text color to white */
+}
+
+.login-container .container-footer .psw a {
+color: #fff; /* Change link color to white */
+}
+
+.login-container .container-footer .psw a:hover {
+color: darkorange; /* Change link color on hover to dark orange */
+}
+</style>
+
+<div class="login-container">
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<div class="container">
+<h2>Login Form</h2>
+<div class="imgcontainer">
+  <img src="{% static 'images/avatar.jpeg' %}" alt="Avatar" class="avatar">
+</div>
+<label for="uname"><b>Username</b></label>
+<input type="text" placeholder="Enter Username" name="username" required>
+
+<label for="psw"><b>Password</b></label>
+<input type="password" placeholder="Enter Password" name="password" required>
+    
+<button type="submit">Login</button>
+<label>
+  <input type="checkbox" checked="checked" name="remember"> Remember me
+</label>
+</div>
+
+<div class="container-footer">
+<span class="psw">Forgot <a href="#">password?</a></span>
+</div>
+</form>
+</div>
+
+{% endblock %}

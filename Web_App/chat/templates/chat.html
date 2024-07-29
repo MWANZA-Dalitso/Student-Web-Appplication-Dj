@@ -1,0 +1,158 @@
+{% extends "base_generic.html" %}
+{% load static %}
+
+{% block title %} Chat {% endblock title %}
+
+{% block content %}
+<style>
+.chat-container {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+max-width: 800px;
+margin: 50px auto;
+padding: 20px;
+background-color: #106b4a;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+position: relative;
+color: #fff;
+}
+
+.chat-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.chat-header h1 {
+margin: 0;
+color: #fff;
+position: relative;
+width: 100%;
+padding-bottom: 5px;
+border-bottom: 2px solid #fff;
+}
+
+#user-list {
+flex: 1;
+padding: 10px;
+background: #fff;
+color: #111;
+border: none;
+border-radius: 5px;
+margin-left: 10px;
+}
+
+.message-container {
+margin-bottom: 20px;
+}
+
+.message {
+padding: 10px;
+border-radius: 5px;
+max-width: 70%;
+word-wrap: break-word;
+margin-bottom: 5px;
+}
+
+.own-message {
+background-color: #3b5998; /* Facebook blue */
+align-self: flex-end;
+}
+
+.other-message {
+background-color: #0084ff; /* WhatsApp blue */
+align-self: flex-start;
+}
+
+#chat-log {
+display: flex;
+flex-direction: column;
+}
+
+#chat-message-input {
+width: calc(100% - 70px); /* Adjust for the send button */
+padding: 10px;
+border-radius: 5px;
+border: none;
+margin-right: 10px;
+}
+
+#chat-message-submit {
+width: 60px; /* Adjust size as needed */
+padding: 10px;
+background-color: #000;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+#chat-message-submit:hover {
+opacity: 0.9;
+}
+</style>
+
+<div class="chat-container">
+<div class="chat-header">
+<h1>Chat</h1>
+<select id="user-list">
+  <option>Select User</option>
+  {% for user in users %}
+    <option value="{{ user.username }}">{{ user.username }}</option>
+  {% endfor %}
+</select>
+</div>
+<div id="chat-log"></div>
+<div>
+<input id="chat-message-input" type="text" placeholder="Type your message...">
+<button id="chat-message-submit">Send</button>
+</div>
+</div>
+
+<script>
+const chatSocket = new WebSocket(
+'ws://' + window.location.host + '/ws');
+
+chatSocket.onmessage = function(e) {
+const data = JSON.parse(e.data);
+const chatLog = document.querySelector('#chat-log');
+const messageContainer = document.createElement('div');
+const message = document.createElement('div');
+message.textContent = data.message;
+message.classList.add('message');
+if (data.sender === "{{ request.user.username }}") {
+  message.classList.add('own-message');
+} else {
+  message.classList.add('other-message');
+}
+messageContainer.appendChild(message);
+chatLog.appendChild(messageContainer);
+chatLog.scrollTop = chatLog.scrollHeight; // Scroll to bottom
+};
+
+chatSocket.onclose = function(e) {
+console.error('Chat socket closed unexpectedly');
+};
+
+document.querySelector('#chat-message-input').focus();
+document.querySelector('#chat-message-input').onkeyup = function(e) {
+if (e.keyCode === 13) {  // Enter key
+  document.querySelector('#chat-message-submit').click();
+}
+};
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+const messageInputDom = document.querySelector('#chat-message-input');
+const message = messageInputDom.value;
+const userList = document.querySelector('#user-list');
+const receiver = userList.value;
+
+chatSocket.send(JSON.stringify({
+  'message': message,
+  'receiver': receiver
+}));
+messageInputDom.value = '';
+};
+</script>
+{% endblock content %}

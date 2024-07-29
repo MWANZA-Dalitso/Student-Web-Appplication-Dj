@@ -1,0 +1,194 @@
+{% extends "base_generic.html" %}
+{% load static %}
+<title>{% block title %} File Uploader{% endblock title %} </title>
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+/* Update body and general styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light background */
+    color: #333; /* Dark text color */
+}
+
+.wrapper {
+    width: 600px;
+    background: #fff; /* White background */
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin: 2em auto; /* Center the uploader */
+}
+
+.wrapper header {
+    background-color: #106b4a; /* Dark green header */
+    color: white; /* White text */
+    text-align: center;
+    padding: 1em 0;
+    border-radius: 5px 5px 0 0; /* Rounded top corners */
+    margin-bottom: 1em; /* Space below header */
+}
+
+.wrapper form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto; /* Adjust height as needed */
+    padding: 2em;
+    border: 2px dashed #106b4a; /* Dashed border with dark green */
+    border-radius: 5px;
+    margin-bottom: 2em; /* Space below form */
+}
+
+form i {
+    color: #106b4a; /* Dark green for upload icon */
+    font-size: 5em; /* Larger upload icon */
+}
+
+form p {
+    margin-top: 15px;
+    font-size: 1.2em; /* Larger font size */
+    color: #106b4a; /* Dark green text */
+}
+
+/* Update section styles */
+section {
+    background-color: #fff; /* White background */
+    margin-bottom: 1em; /* Space between sections */
+    padding: 1em;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center; /* Center align text */
+}
+
+section h2 {
+    color: #106b4a; /* Dark green heading */
+}
+
+section p {
+    color: #333; /* Dark text color */
+}
+
+/* Adjust uploaded area styles */
+.uploaded-area {
+    padding: 1em;
+    background-color: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    margin-bottom: 2em; /* Space below uploaded area */
+}
+
+.uploaded-area .row {
+    margin-bottom: 10px;
+    background: #E9F0FF; /* Light blue background */
+    list-style: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.uploaded-area i.bx-check {
+    font-size: 1.5em; /* Larger checkmark icon */
+    color: #106b4a; /* Dark green color */
+}
+
+</style>
+
+<div class="wrapper">
+<header>Add Document</header>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+<input class="file-input" type="file" name="file" hidden>
+<i class='bx bxs-cloud-upload'></i>
+<p>Browse File to Upload</p>
+</form>
+<section class="progress-area"></section>
+<section class="uploaded-area"></section>
+</div>
+
+<script>  
+document.addEventListener("DOMContentLoaded", function () {
+const form = document.querySelector('form');
+const fileInput = document.querySelector(".file-input");
+const progressArea = document.querySelector(".progress-area");
+const uploadedArea = document.querySelector(".uploaded-area");
+
+// form click handler
+form.addEventListener("click", () => {
+fileInput.click();
+});
+
+fileInput.onchange = ({ target }) => {
+let file = target.files[0];
+if (file) {
+let fileName = file.name;
+if (fileName.length >= 12) {
+let splitName = fileName.split('.');
+fileName = splitName[0].substring(0, 13) + "..." + splitName[1];
+}
+uploadFile(fileName);
+}
+}
+
+// file upload function
+function uploadFile(name) {
+let xhr = new XMLHttpRequest();
+xhr.open("POST", "php/upload.php");
+xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+let fileLoaded = Math.floor((loaded / total) * 100);
+let fileTotal = Math.floor(total / 1000);
+let fileSize;
+if (fileTotal < 1024) {
+fileSize = fileTotal + " KB";
+} else {
+fileSize = ((loaded / 1024 / 1024)).toFixed(2) + " MB";
+}
+let progressHTML = `<li class="row">
+                    <i class="bx bxs-file"></i>
+                    <div class="content">
+                      <div class="details">
+                        <span class="name">${name}. Uploading</span>
+                        <span class="percent">${fileLoaded}%</span>
+                      </div>
+                      <div class="progress-bar">
+                        <div class="progress" style="width: ${fileLoaded}%"></div>
+                      </div>
+                    </div>
+                  </li>`;
+
+progressArea.innerHTML = progressHTML;
+uploadedArea.classList.add("onprogress");
+
+if (loaded === total) {
+progressArea.innerHTML = "";
+let uploadedHTML = `<li class="row">
+                      <div class="content upload">
+                        <i class="bx bxs-check-circle"></i>
+                        <div class="details">
+                          <span class="name">${name}. Uploaded</span>
+                          <span class="size">${fileSize}</span>
+                        </div>
+                      </div>
+                      <i class="bx bxs-check-circle"></i>
+                    </li>`;
+uploadedArea.classList.remove("onprogress");
+uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+}
+});
+
+let data = new FormData(form);
+xhr.send(data);
+}
+});
+</script>
+
+{% endblock content %}
